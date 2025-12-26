@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VFIT Portal - Environment Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .controls label {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-right: 15px;
+            color: #333;
+        }
+        
+        .controls select {
+            padding: 12px 20px;
+            font-size: 1em;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            background: white;
+            min-width: 200px;
+            transition: all 0.3s;
+        }
+        
+        .controls select:hover {
+            border-color: #764ba2;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        .controls button {
+            padding: 12px 30px;
+            font-size: 1em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .controls button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .content {
+            padding: 30px;
+            min-height: 400px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px;
+            font-size: 1.3em;
+            color: #666;
+        }
+        
+        .error {
+            background: #fee;
+            border: 2px solid #fcc;
+            color: #c33;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background: #efe;
+            border: 2px solid #cfc;
+            color: #3c3;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .env-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .env-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .env-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .info-item strong {
+            display: block;
+            color: #667eea;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        
+        .info-item span {
+            color: #333;
+            font-size: 1.1em;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        table a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        table a:hover {
+            text-decoration: underline;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 VFIT Portal</h1>
+            <p>Environment Details Dashboard</p>
+        </div>
+        
+        <div class="controls">
+            <label for="envSelect">Select Environment:</label>
+            <select id="envSelect">
+                <option value="">-- Choose Environment --</option>
+                <option value="uat">UAT (User Acceptance Testing)</option>
+                <option value="pet">PET (Performance Testing)</option>
+                <option value="prod">PROD (Production)</option>
+            </select>
+            <button onclick="loadEnvironment()">Load Details</button>
+            <button onclick="loadAllEnvironments()">Load All</button>
+        </div>
+        
+        <div class="content" id="content">
+            <div class="loading">
+                👆 Select an environment above to view details
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>VFIT Portal v1.0 | Powered by Microservices Architecture</p>
+            <p>API Gateway → Environment Service → Data</p>
+        </div>
+    </div>
+
+    <script>
+        // API Gateway URL (will be different in Kubernetes)
+        const API_BASE_URL = window.location.origin;
+
+        function showLoading() {
+            document.getElementById('content').innerHTML = '<div class="loading">⏳ Loading data...</div>';
+        }
+
+        function showError(message) {
+            document.getElementById('content').innerHTML = `
+                <div class="error">
+                    <strong>❌ Error:</strong><br>
+                    ${message}
+                </div>
+            `;
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success';
+            successDiv.innerHTML = `<strong>✅ Success:</strong> ${message}`;
+            document.getElementById('content').insertBefore(successDiv, document.getElementById('content').firstChild);
+            setTimeout(() => successDiv.remove(), 3000);
+        }
+
+        async function loadEnvironment() {
+            const envSelect = document.getElementById('envSelect');
+            const env = envSelect.value;
+            
+            if (!env) {
+                showError('Please select an environment first!');
+                return;
+            }
+            
+            showLoading();
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/environments/${env}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayEnvironmentData(data.environment, data.data);
+                    showSuccess(`Loaded ${data.environment} environment data`);
+                } else {
+                    showError(data.error || 'Failed to load environment data');
+                }
+            } catch (error) {
+                showError(`Failed to fetch data: ${error.message}`);
+                console.error('Error:', error);
+            }
+        }
+
+        async function loadAllEnvironments() {
+            showLoading();
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/environments`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    displayAllEnvironments(result.data);
+                    showSuccess(`Loaded all ${result.count} environments`);
+                } else {
+                    showError(result.error || 'Failed to load environments');
+                }
+            } catch (error) {
+                showError(`Failed to fetch data: ${error.message}`);
+                console.error('Error:', error);
+            }
+        }
+
+        function displayEnvironmentData(envName, envData) {
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+            
+            for (const [key, details] of Object.entries(envData)) {
+                const section = document.createElement('div');
+                section.className = 'env-section';
+                
+                let html = `<h2>${envName} - ${key}</h2>`;
+                
+                // Basic Info
+                html += '<div class="env-info">';
+                if (details.host) html += `<div class="info-item"><strong>Host</strong><span>${details.host}</span></div>`;
+                if (details.hostFullName) html += `<div class="info-item"><strong>Full Hostname</strong><span>${details.hostFullName}</span></div>`;
+                if (details.ipAddress) html += `<div class="info-item"><strong>IP Address</strong><span>${details.ipAddress}</span></div>`;
+                html += '</div>';
+                
+                // Services Table
+                if (details.services && details.services.length > 0) {
+                    html += '<h3>🔧 Services</h3>';
+                    html += '<table><thead><tr><th>Service Name</th><th>URL</th></tr></thead><tbody>';
+                    details.services.forEach(service => {
+                        html += `<tr><td>${service.name}</td><td><a href="${service.url}" target="_blank">${service.url}</a></td></tr>`;
+                    });
+                    html += '</tbody></table>';
+                }
+                
+                // Database Details Table
+                if (details.dbDetails && details.dbDetails.length > 0) {
+                    html += '<h3>💾 Database Details</h3>';
+                    html += '<table><thead><tr><th>Site</th><th>Module</th><th>Host</th><th>Port</th></tr></thead><tbody>';
+                    details.dbDetails.forEach(db => {
+                        html += `<tr><td>${db.site}</td><td>${db.module}</td><td>${db.host}</td><td>${db.port}</td></tr>`;
+                    });
+                    html += '</tbody></table>';
+                }
+                
+                // Dev Tools Table
+                if (details.devTools && details.devTools.length > 0) {
+                    html += '<h3>🛠️ Development Tools</h3>';
+                    html += '<table><thead><tr><th>Tool Name</th><th>URL</th></tr></thead><tbody>';
+                    details.devTools.forEach(tool => {
+                        html += `<tr><td>${tool.name}</td><td><a href="${tool.url}" target="_blank">${tool.url}</a></td></tr>`;
+                    });
+                    html += '</tbody></table>';
+                }
+                
+                section.innerHTML = html;
+                content.appendChild(section);
+            }
+        }
+
+        function displayAllEnvironments(allData) {
+            const content = document.getElementById('content');
+            content.innerHTML = '<h2 style="color: #667eea; margin-bottom: 20px;">📊 All Environments</h2>';
+            
+            for (const [envName, envData] of Object.entries(allData)) {
+                if (envData) {
+                    displayEnvironmentData(envName, envData);
+                }
+            }
+        }
+
+        // Health check on page load
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/environments-list`);
+                const data = await response.json();
+                console.log('✅ Connected to API Gateway');
+                console.log('Available environments:', data.environments);
+            } catch (error) {
+                console.error('❌ Failed to connect to API Gateway:', error);
+            }
+        });
+    </script>
+</body>
+</html>
