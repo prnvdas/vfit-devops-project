@@ -1,0 +1,14 @@
+{
+  "UAT1": {
+    "host": "nxtuatrt01",
+    "hostFullName": "nxtuatrt01.uat.domain.com",
+    "ipAddress": "10.20.30.40",
+    "services": [
+      {"name": "Application Server", "url": "http://uat-app:8080"},
+      {"name": "Database", "url": "http://uat-db:1521"}
+    ],
+    "dbDetails": [
+      {"site": "SITE1", "module": "APP", "host": "10.1.1.1", "port": "1521"}
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "PROD1": {
+    "host": "nxtprodrt01",
+    "hostFullName": "nxtprodrt01.prod.domain.com",
+    "ipAddress": "10.40.50.60",
+    "services": [
+      {"name": "Application Server", "url": "https://prod-app:8443"}
+    ],
+    "dbDetails": [
+      {"site": "SITE1", "module": "APP", "host": "10.3.3.3", "port": "1521"}
+    ]
+  }
+}

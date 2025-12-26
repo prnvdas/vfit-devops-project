@@ -1,0 +1,13 @@
+{
+  "PET1": {
+    "host": "nxtpetrt01",
+    "hostFullName": "nxtpetrt01.pet.domain.com",
+    "ipAddress": "10.30.40.50",
+    "services": [
+      {"name": "Application Server", "url": "http://pet-app:8080"}
+    ],
+    "dbDetails": [
+      {"site": "SITE1", "module": "APP", "host": "10.2.2.2", "port": "1521"}
+    ]
+  }
+}
