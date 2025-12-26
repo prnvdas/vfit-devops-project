@@ -245,7 +245,8 @@
 
     <script>
         // API Gateway URL (will be different in Kubernetes)
-        const API_BASE_URL = window.location.origin;
+       // For local Docker testing, use port 8080
+       const API_BASE_URL = window.location.protocol + '//' + window.location.hostname + ':8080'; 
 
         function showLoading() {
             document.getElementById('content').innerHTML = '<div class="loading">⏳ Loading data...</div>';
